@@ -212,6 +212,8 @@ public class GameService {
       return completedFuture(null);
     }
 
+    newGameInfo.setMap("NeroxisMapGenerator_1_0.0.1-prealpha");
+
     stopSearchLadder1v1();
 
     return updateGameIfNecessary(newGameInfo.getFeaturedMod(), null, emptyMap(), newGameInfo.getSimMods())
