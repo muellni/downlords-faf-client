@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Downlord's FAF Client",
     "lastOpened": 0,
-    "created": 1524914561821
+    "created": 1526242710438
   },
   "iconSets": [
     {
@@ -17603,7 +17603,7 @@
           "ligatures": "angry, emoticon15",
           "name": "angry",
           "id": 237,
-          "order": 0
+          "order": 111
         },
         {
           "ligatures": "angry2, emoticon16",
