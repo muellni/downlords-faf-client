@@ -269,7 +269,6 @@ public class GameService {
   /**
    * @param path a replay file that is readable by the preferences without any further conversion
    */
-
   public void runWithReplay(Path path, @Nullable Integer replayId, String featuredMod, Integer version, Map<String, Integer> modVersions, Set<String> simMods, String mapName) {
     if (isRunning()) {
       logger.warn("Forged Alliance is already running, not starting replay");
@@ -334,7 +333,6 @@ public class GameService {
     return games;
   }
 
-
   public Game getByUid(int uid) {
     Game game = uidToGameInfoBean.get(uid);
     if (game == null) {
@@ -394,7 +392,6 @@ public class GameService {
    * Returns the preferences the player is currently in. Returns {@code null} if not in a preferences.
    */
   @Nullable
-
   public Game getCurrentGame() {
     synchronized (currentGame) {
       return currentGame.get();
@@ -630,5 +627,13 @@ public class GameService {
     synchronized (uidToGameInfoBean) {
       uidToGameInfoBean.remove(gameInfoMessage.getUid());
     }
+  }
+
+
+  /**
+   *Can be used as a lock/monitor , so that the game service pauses the adding of new games
+   */
+  public Object getGameServiceGameChaningLock() {
+    return uidToGameInfoBean;
   }
 }

@@ -36,24 +36,27 @@ public class GamesTilesContainerControllerTest extends AbstractPlainJavaFxTest {
   private UiService uiService;
   @Mock
   private PreferencesService preferencesService;
+  @Mock
+  private GameService gameService;
 
   private GamesTilesContainerController instance;
   private Preferences preferences;
 
   @Before
   public void setUp() throws Exception {
-    instance = new GamesTilesContainerController(uiService, preferencesService);
+    instance = new GamesTilesContainerController(uiService, preferencesService, gameService);
 
     when(uiService.loadFxml("theme/play/game_card.fxml")).thenReturn(gameTileController);
     preferences = new Preferences();
     when(preferencesService.getPreferences()).thenReturn(preferences);
     when(gameTileController.getRoot()).thenReturn(new Pane()).thenReturn(new FlowPane()).thenReturn(new StackPane());
+    when(gameService.getGameServiceGameChaningLock()).thenReturn(new Object());
 
     loadFxml("theme/play/games_tiles_container.fxml", clazz -> instance);
   }
 
   @Test
-  public void testCreateTiledFlowPaneWithEmptyList() throws Exception {
+  public void testCreateTiledFlowPaneWithEmptyList() {
     ObservableList<Game> observableList = FXCollections.observableArrayList();
 
     instance.createTiledFlowPane(observableList, new ComboBox<>());
@@ -62,7 +65,7 @@ public class GamesTilesContainerControllerTest extends AbstractPlainJavaFxTest {
   }
 
   @Test
-  public void testCreateTiledFlowPaneWithPopulatedList() throws Exception {
+  public void testCreateTiledFlowPaneWithPopulatedList() {
     when(gameTileController.getRoot()).thenReturn(new Pane());
     ObservableList<Game> observableList = FXCollections.observableArrayList();
     observableList.add(new Game());
@@ -115,7 +118,7 @@ public class GamesTilesContainerControllerTest extends AbstractPlainJavaFxTest {
   }
 
   @Test
-  public void testSorting() throws Exception {
+  public void testSorting() {
     ObservableList<Game> observableList = FXCollections.observableArrayList();
     Game game1 = GameBuilder.create().defaultValues().get();
     Game game2 = GameBuilder.create().defaultValues().title("xyz").get();
