@@ -28,6 +28,10 @@ faf-client:
   client-config-url: http://content.faforever.com/dfc-config.json
   client-config-connect-timeout: 10s
 
+  bugsnag-config:
+    token: 1b62174670c1235a71edadf62fa5a927
+    log-lines-sent: 300
+
 spring:
   profiles:
     active: ${CLIENT_PROFILE:prod}
