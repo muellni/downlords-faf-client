@@ -111,7 +111,7 @@ public class IceAdapterImpl implements IceAdapter {
 
       map.put("credential", iceServer.getCredential());
       map.put("credentialType", "token");
-      map.put("username", iceServers.get(2).getUsername());
+      map.put("username", iceServer.getUsername());
 
       result.add(map);
     }
