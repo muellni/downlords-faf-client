@@ -275,6 +275,9 @@ public class GameService {
     }
 
     GameLaunchMessage gameLaunchMessage = galacticWarGameEvent.getGameLaunchMessage();
+    gameLaunchMessage.getArgs().add("/team 1");
+    gameLaunchMessage.getArgs().add("/players 2");
+
     fafService.getFeaturedMods()
         .thenCompose(featuredMods -> {
           FeaturedMod featuredMod = featuredMods.stream().filter(mod -> mod.getTechnicalName().equals(KnownFeaturedMod.GALACTIC_WAR.getTechnicalName())).findAny().get();
