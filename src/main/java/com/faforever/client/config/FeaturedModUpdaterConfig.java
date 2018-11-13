@@ -33,7 +33,7 @@ public class FeaturedModUpdaterConfig {
   @Bean
   GameUpdater gameUpdater() {
     return new GameUpdaterImpl(modService, applicationContext, taskService, fafService, faInitGenerator, preferencesService)
-        .addFeaturedModUpdater(bireusFeaturedModUpdater)
+        //.addFeaturedModUpdater(bireusFeaturedModUpdater)
         .addFeaturedModUpdater(httpFeaturedModUpdater);
   }
 }
