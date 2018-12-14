@@ -1,6 +1,6 @@
 faf-client:
   server:
-    host: test.faforever.com
+    host: faf.micheljung.ch
     port: 8001
 
   irc:
@@ -13,13 +13,13 @@ faf-client:
     feed-url: http://direct.faforever.com/news/feed
 
   replay:
-    remote-host: test.faforever.com
+    remote-host: faf.micheljung.ch
 
   website:
     base-url: https://www.test.faforever.com
 
   api:
-    base-url: http://api.test.faforever.com
+    base-url: https://api.faf.micheljung.ch
     client-id: 3bc8282c-7730-11e5-8bcf-feff819cdc9f
     client-secret: 6035bd78-7730-11e5-8bcf-feff819cdc9f
 
