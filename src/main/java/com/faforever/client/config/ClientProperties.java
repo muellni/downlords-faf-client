@@ -20,6 +20,7 @@ public class ClientProperties {
   private TrueSkill trueSkill = new TrueSkill();
   private Api api = new Api();
   private UnitDatabase unitDatabase = new UnitDatabase();
+  private MapGenerator mapGenerator = new MapGenerator();
   private Website website = new Website();
   private String translationProjectUrl;
   private String clientConfigUrl;
@@ -130,5 +131,10 @@ public class ClientProperties {
   public static class UnitDatabase {
     private String spookiesUrl;
     private String rackOversUrl;
+  }
+
+  @Data
+  public static class MapGenerator {
+    private String mapGeneratorReleaseUrl;
   }
 }

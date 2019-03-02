@@ -7,6 +7,8 @@ import com.faforever.client.fa.FaStrings;
 import com.faforever.client.fx.JavaFxUtil;
 import com.faforever.client.i18n.I18n;
 import com.faforever.client.map.MapBean.Type;
+import com.faforever.client.map.generator.MapGeneratedEvent;
+import com.faforever.client.map.generator.MapGeneratorService;
 import com.faforever.client.preferences.PreferencesService;
 import com.faforever.client.remote.AssetService;
 import com.faforever.client.remote.FafService;
@@ -16,6 +18,8 @@ import com.faforever.client.task.TaskService;
 import com.faforever.client.theme.UiService;
 import com.faforever.client.util.ProgrammingError;
 import com.faforever.client.vault.search.SearchController.SearchConfig;
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -78,6 +82,8 @@ public class MapService {
   private final AssetService assetService;
   private final I18n i18n;
   private final UiService uiService;
+  private final MapGeneratorService mapGeneratorService;
+  private final EventBus eventBus;
 
   private final String mapDownloadUrlFormat;
   private final String mapPreviewUrlFormat;
@@ -92,7 +98,7 @@ public class MapService {
   public MapService(PreferencesService preferencesService, TaskService taskService,
                     ApplicationContext applicationContext,
                     FafService fafService, AssetService assetService,
-                    I18n i18n, UiService uiService, ClientProperties clientProperties) {
+                    I18n i18n, UiService uiService, ClientProperties clientProperties, MapGeneratorService mapGeneratorService, EventBus eventBus) {
     this.preferencesService = preferencesService;
     this.taskService = taskService;
     this.applicationContext = applicationContext;
@@ -100,6 +106,8 @@ public class MapService {
     this.assetService = assetService;
     this.i18n = i18n;
     this.uiService = uiService;
+    this.mapGeneratorService = mapGeneratorService;
+    this.eventBus = eventBus;
 
     Vault vault = clientProperties.getVault();
     this.mapDownloadUrlFormat = vault.getMapDownloadUrlFormat();
@@ -131,6 +139,7 @@ public class MapService {
 
   @PostConstruct
   void postConstruct() {
+    eventBus.register(this);
     customMapsDirectory = preferencesService.getPreferences().getForgedAlliance().getCustomMapsDirectory();
     JavaFxUtil.addListener(preferencesService.getPreferences().getForgedAlliance().pathProperty(), observable -> tryLoadMaps());
     JavaFxUtil.addListener(preferencesService.getPreferences().getForgedAlliance().customMapsDirectoryProperty(), observable -> tryLoadMaps());
@@ -215,6 +224,11 @@ public class MapService {
     } catch (MapLoadException e) {
       logger.warn("Map could not be read: " + path.getFileName(), e);
     }
+  }
+
+  @Subscribe
+  public void onMapGenerated(MapGeneratedEvent event) {
+    addSkirmishMap(getPathForMap(event.getMapName()));
   }
 
 
@@ -424,6 +438,11 @@ public class MapService {
   }
 
   private CompletableFuture<Void> downloadAndInstallMap(String folderName, URL downloadUrl, @Nullable DoubleProperty progressProperty, @Nullable StringProperty titleProperty) {
+    if (mapGeneratorService.isGeneratedMap(folderName)) {
+      return mapGeneratorService.generateMap(folderName).thenRun(() -> {
+      });
+    }
+
     DownloadMapTask task = applicationContext.getBean(DownloadMapTask.class);
     task.setMapUrl(downloadUrl);
     task.setFolderName(folderName);
