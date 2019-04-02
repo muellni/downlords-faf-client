@@ -12,6 +12,22 @@
                  tabMaxHeight="200.0"
                  tabMinHeight="200.0" VBox.vgrow="ALWAYS">
             <tabs>
+                <Tab fx:id="teamMatchmakingTab">
+                    <content>
+                        <fx:include source="team_matchmaking.fxml" fx:id="teamMatchmaking"/>
+                    </content>
+                    <graphic>
+                        <Group>
+                            <children>
+                                <VBox prefWidth="200.0" rotate="90.0">
+                                    <children>
+                                        <Label text="%play.teamMatchmaking" styleClass="tab-label"/>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </Group>
+                    </graphic>
+                </Tab>
                 <Tab fx:id="customGamesTab">
                     <content>
                         <fx:include source="custom_games.fxml" fx:id="customGames"/>
@@ -29,21 +45,21 @@
                     </graphic>
                 </Tab>
                 <Tab fx:id="ladderTab">
-               <content>
-                   <fx:include source="ranked_1v1.fxml" fx:id="ladder"/>
-               </content>
-               <graphic>
-                  <Group>
-                     <children>
-                        <VBox prefWidth="200.0" rotate="90.0">
-                           <children>
-                               <Label text="%play.ranked1v1" styleClass="tab-label"/>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Group>
-               </graphic>
-            </Tab>
+                    <content>
+                        <fx:include source="ranked_1v1.fxml" fx:id="ladder"/>
+                    </content>
+                    <graphic>
+                        <Group>
+                            <children>
+                                <VBox prefWidth="200.0" rotate="90.0">
+                                    <children>
+                                        <Label text="%play.ranked1v1" styleClass="tab-label"/>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </Group>
+                    </graphic>
+                </Tab>
                 <Tab fx:id="coopTab">
                     <content>
                         <fx:include source="coop/coop.fxml" fx:id="coop"/>
